@@ -1,8 +1,8 @@
 FROM php:7.2-apache
 MAINTAINER wish@baffedu.com
 
-RUN apt-get update && apt-get -y install git curl zip libmagickwand-dev 
-    && apt-get -y install supervisor cron
+RUN apt-get update && apt-get -y install git curl zip libmagickwand-dev \
+    && apt-get -y install supervisor cron \
     && apt-get -y autoremove && apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN pecl install imagick
 RUN docker-php-ext-install bcmath pdo_mysql mbstring gd zip
@@ -21,8 +21,9 @@ RUN /usr/local/bin/composer create-project laravel/laravel /var/www/laravel --pr
 RUN /bin/chown www-data:www-data -R /var/www/laravel/storage /var/www/laravel/bootstrap/cache
 
 ADD 000-cron.conf /etc/supervisor/conf.d/
+ADD 000-apache.conf /etc/supervisor/conf.d/
 RUN echo "* * * * * /usr/local/bin/php /var/www/laravel/artisan schedule:run >> /dev/null 2>&1" | crontab
 
 WORKDIR /var/www/laravel
 
-ENTRYPOINT ["supervisord"]
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
