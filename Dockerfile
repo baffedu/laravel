@@ -16,7 +16,7 @@ RUN /usr/sbin/a2dissite '*' && /usr/sbin/a2ensite 000-laravel
 
 RUN /usr/bin/curl -sS https://getcomposer.org/installer | php
 RUN /bin/mv composer.phar /usr/local/bin/composer
-RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
+RUN composer config -g repo.packagist composer https://packagist.laravel-china.org
 RUN /usr/local/bin/composer create-project laravel/laravel /var/www/laravel --prefer-dist
 RUN /bin/chown www-data:www-data -R /var/www/laravel/storage /var/www/laravel/bootstrap/cache
 
