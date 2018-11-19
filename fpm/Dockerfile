@@ -24,6 +24,7 @@ RUN set x=1 && \
     mkdir -p /var/log/supervisor && \
     sed -i 's/;pidfile/pidfile/g' /etc/supervisord.conf && \
     sed -i 's/client_max_body_size/#client_max_body_size/g' /etc/nginx/nginx.conf && \
+    echo -e "post_max_size=200M\nupload_max_filesize=200M" > /usr/local/etc/php/php.ini && \
     docker-php-source delete && \
     apk del -f .build-deps freetype-dev libpng-dev libjpeg-turbo-dev && \
     rm -rf /tmp/* /var/cache/apk/*

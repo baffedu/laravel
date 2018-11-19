@@ -21,6 +21,7 @@ RUN /bin/chown www-data:www-data -R /var/www/laravel/storage /var/www/laravel/bo
 
 ADD 000-cron.conf /etc/supervisor/conf.d/
 ADD 000-apache.conf /etc/supervisor/conf.d/
+RUN echo -e "post_max_size=200M\nupload_max_filesize=200M" > /usr/local/etc/php/php.ini
 RUN echo "* * * * * /usr/local/bin/php /var/www/laravel/artisan schedule:run >> /dev/null 2>&1" | crontab
 
 WORKDIR /var/www/laravel
