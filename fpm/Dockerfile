@@ -15,7 +15,7 @@ RUN set x=1 && \
         --with-png-dir=/usr/include/ \
         --with-jpeg-dir=/usr/include/ && \
     pecl install imagick && \
-    docker-php-ext-install -j$(nproc) gd pdo_mysql bcmath zip opcache && \
+    docker-php-ext-install -j$(nproc) gd pcntl pdo_mysql bcmath zip opcache && \
     docker-php-ext-enable imagick && \
     wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer && \
