@@ -24,7 +24,7 @@ RUN set x=1 && \
     apk del -f .build-deps freetype-dev libpng-dev libjpeg-turbo-dev && \
     rm -rf /tmp/* /var/cache/apk/*
 
-ADD supervisor /etc/supervisor.d/
+ADD supervisor/conf.d /etc/supervisor.d/
 RUN echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > crontab.log && \
     crontab crontab.log && rm -rf crontab.log
 
