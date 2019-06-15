@@ -1,8 +1,6 @@
 FROM php:7.2-fpm-alpine
 MAINTAINER wish@baffedu.net
 
-# RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-
 RUN set x=1 && \
     apk update && \
     apk add --no-cache --virtual .build-deps $PHPIZE_DEPS zlib-dev imagemagick-dev libtool && \
@@ -19,18 +17,14 @@ RUN set x=1 && \
     docker-php-ext-enable imagick && \
     wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer && \
-    apk add --no-cache --virtual .nginx nginx && \
-    mkdir -p /run/nginx && \
     mkdir -p /var/log/supervisor && \
     sed -i 's/;pidfile/pidfile/g' /etc/supervisord.conf && \
-    sed -i 's/client_max_body_size/#client_max_body_size/g' /etc/nginx/nginx.conf && \
     echo -e "post_max_size=200M\nupload_max_filesize=200M" > /usr/local/etc/php/php.ini && \
     docker-php-source delete && \
     apk del -f .build-deps freetype-dev libpng-dev libjpeg-turbo-dev && \
     rm -rf /tmp/* /var/cache/apk/*
 
 ADD supervisor /etc/supervisor.d/
-ADD nginx /etc/nginx/conf.d/
 RUN echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > crontab.log && \
     crontab crontab.log && rm -rf crontab.log
 
