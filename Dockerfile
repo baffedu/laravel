@@ -30,4 +30,6 @@ RUN echo "* * * * * php /var/www/html/artisan schedule:run >> /dev/null 2>&1" > 
 
 EXPOSE 80
 
+VOLUME /var/www/html
+
 CMD ["supervisord", "-n", "-c", "/etc/supervisord.conf"]
