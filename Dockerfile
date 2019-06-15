@@ -18,6 +18,7 @@ RUN set x=1 && \
     wget https://dl.laravel-china.org/composer.phar -O /usr/local/bin/composer && \
     chmod a+x /usr/local/bin/composer && \
     mkdir -p /var/log/supervisor && \
+    mkdir -p /var/www/html && \
     sed -i 's/;pidfile/pidfile/g' /etc/supervisord.conf && \
     echo -e "post_max_size=200M\nupload_max_filesize=200M" > /usr/local/etc/php/php.ini && \
     docker-php-source delete && \
