@@ -20,7 +20,7 @@ RUN set x=1 && \
     mkdir -p /var/log/supervisor && \
     mkdir -p /var/www/html && \
     sed -i 's/;pidfile/pidfile/g' /etc/supervisord.conf && \
-    echo -e "post_max_size=200M\nupload_max_filesize=512M" > /usr/local/etc/php/php.ini && \
+    echo -e "post_max_size=512M\nupload_max_filesize=512M" > /usr/local/etc/php/php.ini && \
     docker-php-source delete && \
     apk del -f .build-deps freetype-dev libpng-dev libjpeg-turbo-dev && \
     rm -rf /tmp/* /var/cache/apk/*
